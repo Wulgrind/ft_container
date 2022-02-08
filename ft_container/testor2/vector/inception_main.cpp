@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   inception_main.cpp                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kmacquet <kmacquet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qbrillai <qbrillai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 13:07:06 by hbaudet           #+#    #+#             */
-/*   Updated: 2021/09/28 18:46:23 by kmacquet         ###   ########.fr       */
+/*   Updated: 2022/02/08 10:35:37 by qbrillai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,7 @@ int main()
 			cout << insert_in_me.at(i).at(j) << ' ';
 		cout << '\n';
 	}
-	cout << "here3" << '\n';
+/*	cout << "here3" << '\n';
 	vector<vector<int> >::const_iterator const_it(insert_in_me.begin());
 	cout << "Const it.front() : " << std::endl;
 	cout << (*const_it).front() << '\n';
@@ -390,7 +390,7 @@ int main()
 		cout << (*it).front() << " ";
 	cout << '\n';
 
-	cout << std::endl;
+	cout << std::endl;*/
 	return (0);
 }
 

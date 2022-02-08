@@ -8,13 +8,58 @@
 
 int	main()
 {
-	 ft::vector<std::string> test;
 
-	/*for (int i = 0; i < 1000000; i++)
+	ft::vector<int> myvector (3,100);
+  ft::vector<int>::iterator it;
+
+  it = myvector.begin();
+  it = myvector.insert ( it , 200 );
+
+  myvector.insert (it,2,300);
+
+  // "it" no longer valid, get a new one:
+  it = myvector.begin();
+
+  /*ft::vector<int> anothervector (2,400);
+  myvector.insert (it+2,anothervector.begin(),anothervector.end());*/
+
+  /*int myarray [] = { 501,502,503 };
+  myvector.insert (myvector.begin(), myarray, myarray+3);*/
+
+  std::cout << "myvector contains:";
+  for (it=myvector.begin(); it<myvector.end(); it++)
+    std::cout << ' ' << *it;
+ std::cout << '\n';
+
+ std::vector<int> myvector2 (3,100);
+  std::vector<int>::iterator it2;
+
+  it2 = myvector2.begin();
+  it2 = myvector2.insert ( it2 , 200 );
+
+  myvector2.insert (it2,2,300);
+
+  // "it" no longer valid, get a new one:
+  it2 = myvector2.begin();
+
+ /* std::vector<int> anothervector2 (2,400);
+  myvector2.insert (it2+2,anothervector2.begin(),anothervector2.end());*/
+
+  /*int myarray2 [] = { 501,502,503 };
+  myvector2.insert (myvector2.begin(), myarray2, myarray2+3);*/
+
+  std::cout << "myvector contains:";
+  for (it2=myvector2.begin(); it2<myvector2.end(); it2++)
+    std::cout << ' ' << *it2;
+ std::cout << '\n';
+
+	 /*ft::vector<std::string> test;
+
+	for (int i = 0; i < 1000000; i++)
     {
         test = new ft::vector<std::string>;
         delete test;
-    }*/
+    }
 	std::cout << "1" << std::endl;
 	ft::vector<std::string>		ft_c0(4, "___");
 	std::vector<std::string>	std_c0(4, "___");
@@ -28,7 +73,7 @@ int	main()
 	std::cout << "std1 " << std::cout << *std_c0.begin() << std::endl;
 std::cout << "3" << std::endl;
 	std::cout << "size " <<ft_c0.size() << std::endl;
-	std::cout << "capacity" << ft_c0.capacity() << std::endl;
+	std::cout << "capacity " << ft_c0.capacity() << std::endl;
 	ft_ret = ft_c0.insert(ft_c0.begin(), "B");
 	std::cout << "4" << std::endl;
 	std_ret = std_c0.insert(std_c0.begin(), "B");
@@ -54,7 +99,7 @@ std::cout << "3" << std::endl;
 	std::cout << std::endl;
 	for (std::vector<std::string>::iterator it = std_c0.begin(); it < std_c0.end(); it++){
 		std::cout << *it << std::endl;
-	}
+	}*/
 	/*ft_ret = ft_c0.insert(ft_c0.end(), "End...");
 	std_ret = std_c0.insert(std_c0.end(), "End...");
 

@@ -128,21 +128,18 @@ namespace ft {
 				throw (std::length_error("allocator<T>::allocate(size_t n) 'n' exceeds maximum supported size"));
 			else if (n > this->max)
 			{
-				value_type temp[this->sizetab];
-				value_type *starttemp = this->starttab;
-				for (size_type i = 0; i < this->sizetab; i++)
-				{
-					temp[i] = *starttemp;
-					starttemp++;
-				}
+				value_type *pstart = starttab;
 				this->starttab = allocator.allocate (n);
-				max = n;
 				this->endtab = this->starttab;
+				value_type *pstart2 = pstart;
 				for (size_type i = 0; i < this->sizetab; i++)
 				{
-					allocator.construct(this->endtab, temp[i]);
+					allocator.construct(endtab, *pstart2);
 					this->endtab++;
+					pstart2++;
 				}
+				allocator.deallocate(pstart, max);
+				max = n;
 			}
 		}
 
@@ -358,7 +355,6 @@ namespace ft {
 			}
 			endtab += 1;
 			sizetab += 1;
-		//	std::cout << *(endtab - 1) << std::endl;
 			return (it);
 		}
 
@@ -412,41 +408,33 @@ namespace ft {
 				while (pos + index < position.p)
 					index++;
 				this->reserve((this->sizetab + n));
-				it = starttab + index;
-				value_type tab[endtab - it + 1];
-				int i = 0;
-				while (it < endtab){
-					tab[i] = *it;
-					it++;
-					i++;
+				value_type *newend = endtab + n;
+				value_type *newpos = starttab + index + n;
+				value_type *end = endtab;
+				while (--newend >= newpos){
+					//*newend = --end;
+					allocator.construct(newend, *--end);
 				}
-				it = starttab + index;
+				value_type *start = starttab + index;
 				for (size_type i = 0; i < n; i++){
-					*it = val;
-					it++;
-				}
-				for (size_type i = 0; it < endtab + n; i++){
-					*it = tab[i];
-					it++;
+					//*start = val;
+					allocator.construct(start , val);
+					start++;
 				}
 			}
-			else {             // Si je n en ai pas besoin.
-				it = position.p;
-				value_type tab[endtab - it + 1];
-				size_type i = 0;
-				while (it < endtab){
-					tab[i] = *it;
-					it++;
-					i++;
+			else {             // Si je n en ai pas besoin
+				value_type *newend = endtab + n;
+				value_type *newpos = position.p + n;
+				value_type *end = endtab;
+				while (--newend >= newpos){
+					//*newend = *--end;
+					allocator.construct(newend, *--end);
 				}
-				it = position.p;
+				value_type *start = position.p;
 				for (size_type i = 0; i < n; i++){
-					*it = val;
-					it++;
-				}
-				for (size_type i = 0; it < endtab + n; i++){
-					*it = tab[i];
-					it++;
+					//*start = val;
+					allocator.construct (start, val);
+					start++;
 				}
 			}
 			endtab += n;
