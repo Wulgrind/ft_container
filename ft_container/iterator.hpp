@@ -225,6 +225,8 @@ namespace ft {
 		//iterator & operator=(iterator const & rhs) {this->p = reinterpret_cast<noeud<value_type> *>(rhs.p); return *this;}
 		iterator & operator=(value_type *src) {this->p = src; return *this;}
 		iterator & operator++(void) { // Pour itérer on prend la valeur la plus à gauche de l'enfant droit. Sinon nous devons remonter jusqu'à une valeur supérieure à notre noeud actuel, donc dont il n'est pas l'enfant droit.
+			if(this->p->couleur == 10)
+				return *this;
 			if (this->p->droit != NULL) {
       			this->p = this->p->droit;
       			while (this->p->gauche != NULL)

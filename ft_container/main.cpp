@@ -8,50 +8,50 @@
 
 int	main()
 {
+	{
 
-	ft::vector<int> myvector (3,100);
-  ft::vector<int>::iterator it;
+		std::map<double,int> 				std_c0;
+		ft::map<double,int> 				ft_c0;
 
-  it = myvector.begin();
-  it = myvector.insert ( it , 200 );
+		// insert some values:
+		std_c0[1]= 42 ;
+		std_c0[0] = 0;
+		std_c0[-4] = 21;
 
-  myvector.insert (it,2,300);
+		ft_c0[1]= 42 ;
+		ft_c0[0] = 0;
+		ft_c0[-4] = 21;
 
-  // "it" no longer valid, get a new one:
-  it = myvector.begin();
+		std::map<double, int>::iterator		std_it_1 = std_c0.begin();
+		ft::map<double, int>::iterator			ft_it_1 = ft_c0.begin();
 
-  /*ft::vector<int> anothervector (2,400);
-  myvector.insert (it+2,anothervector.begin(),anothervector.end());*/
 
-  /*int myarray [] = { 501,502,503 };
-  myvector.insert (myvector.begin(), myarray, myarray+3);*/
+		std_it_1->second = 21;
+		ft_it_1->second = 21;
 
-  std::cout << "myvector contains:";
-  for (it=myvector.begin(); it<myvector.end(); it++)
-    std::cout << ' ' << *it;
- std::cout << '\n';
+		std::map<double, int>::iterator		std_it_2(std_it_1);
+		ft::map<double, int>::iterator		ft_it_2(ft_it_1);
+		std::map<double, int>::iterator		std_it_3;
+		ft::map<double, int>::iterator		ft_it_3;
+		std_it_3 = std_it_1;
+		ft_it_3 = ft_it_1;
+	}
+	{
+		ft::map<double, int>	ft_c0;
+		std::map<double, int>	std_c0;
+		size_t				testSize = 10;
 
- std::vector<int> myvector2 (3,100);
-  std::vector<int>::iterator it2;
 
-  it2 = myvector2.begin();
-  it2 = myvector2.insert ( it2 , 200 );
-
-  myvector2.insert (it2,2,300);
-
-  // "it" no longer valid, get a new one:
-  it2 = myvector2.begin();
-
- /* std::vector<int> anothervector2 (2,400);
-  myvector2.insert (it2+2,anothervector2.begin(),anothervector2.end());*/
-
-  /*int myarray2 [] = { 501,502,503 };
-  myvector2.insert (myvector2.begin(), myarray2, myarray2+3);*/
-
-  std::cout << "myvector contains:";
-  for (it2=myvector2.begin(); it2<myvector2.end(); it2++)
-    std::cout << ' ' << *it2;
- std::cout << '\n';
+		for (size_t i = 1; i < testSize; i++)	{
+			ft_c0.insert(ft::make_pair<double, int>(i, 0));
+			std_c0.insert(std::make_pair<double, int>(i, 0));
+		}
+		ft::map<double, int>::iterator		ft_it = ft_c0.begin();
+		ft::map<double, int>::iterator		ft_it2 = ft_c0.begin();
+		ft::map<double, int>::iterator		ft_itend = ft_c0.end();
+		//ft_it--;
+		ft_it2 = ft_it;
+	}
 
 	 /*ft::vector<std::string> test;
 

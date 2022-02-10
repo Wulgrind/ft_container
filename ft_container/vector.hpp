@@ -129,7 +129,7 @@ namespace ft {
 			else if (n > this->max)
 			{
 				value_type *pstart = starttab;
-				this->starttab = allocator.allocate (n);
+				this->starttab = allocator.allocate(n);
 				this->endtab = this->starttab;
 				value_type *pstart2 = pstart;
 				for (size_type i = 0; i < this->sizetab; i++)
@@ -288,13 +288,13 @@ namespace ft {
 		
 		void push_back (const value_type& val)
 		{
-			if (sizetab == 0)
+			if (max == 0)
 				this->reserve(1);
 			if (this->sizetab == this->max)
 			{
 				this->reserve(this->max * 2);
 			}
-			if (this->sizetab == 0)
+			if (endtab == NULL)
 				endtab = starttab;
 			//if (this->sizetab == 0){
 //
@@ -307,7 +307,7 @@ namespace ft {
 
 		void pop_back (void){this->endtab--; this->sizetab--; this->endtab->value_type::~value_type();}
 
-		iterator insert (iterator position, const value_type& val)
+			iterator insert (iterator position, const value_type& val)
 		{
 			if (this->sizetab == 0){
 				for (size_type i = 0; i < 1; i++)
@@ -316,21 +316,19 @@ namespace ft {
 			}
 			value_type *it;
 			if ((this->sizetab + 1) > this->max){ // si j ai besoin d utiliser reserve.
-			//	std::cout << "here1" << std::endl;
+			//	std::cout << "here5" << std::endl;
 				value_type *pos = starttab;
+				value_type temp;
 				int index = 0;
 				while (pos + index < position.p)
 					index++;
-				if (sizetab == max)
-					this->reserve(this->max * 2);
-			//	value_type *tempend = endtab;
-				it = starttab + index;
-				value_type temp;
-				temp = *it;
 				value_type temp2;
+				push_back(* (endtab - 1));
+				it = starttab + index;
+				temp = *it;
 				*it = val;
 				it++;
-				while (it < endtab + 1){
+				while (it < endtab){
 					temp2 = *it;
 					*it = temp;
 					temp = temp2;
@@ -338,26 +336,34 @@ namespace ft {
 				}
 				it = starttab + index;
 			}
-			else {             // Si je n en ai pas besoin.
+			else {             // Si je n en ai pas besoin
+				//std::cout << "here6" << std::endl;
 				it = position.p;
 				value_type temp;
 				temp = *it;
 				value_type temp2;
+			//	std::cout << "here7" << std::endl;
+				push_back(*(endtab - 1));
+			//	std::cout << "here8" << std::endl;
 				*it = val;
+				//*it = val;
 				it++;
-				while (it < endtab + 1){
+				while (it < endtab){
+					//temp2 = *it;
+					//it = temp;
+					//temp = temp2;
 					temp2 = *it;
 					*it = temp;
+					//*it = temp;
 					temp = temp2;
 					it++;
 				}
+			//	std::cout << "here10" << std::endl;
 				it = position.p;
 			}
-			endtab += 1;
-			sizetab += 1;
 			return (it);
 		}
-
+		
 		/*void insert (iterator position, size_type n, const value_type& val)
 		{
 			std::cout << "here" << std::endl;

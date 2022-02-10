@@ -14,7 +14,7 @@
 #endif
 
 
-#define NB_OF_ELEMENTS 1000000
+#define NB_OF_ELEMENTS 10000
 #define FALSE 0
 
 unsigned long int	chrono_init(void)
@@ -55,6 +55,7 @@ void constructor_bench()
     std::cout << "Constructor fill" << std::endl;
     for (int i = 0; i < NB_OF_ELEMENTS; i++)
     {
+        //std::cout << "here" << std::endl;
         test = new NAMESPACE::vector<std::string>(10, "blop");
         delete test;
     }
@@ -110,6 +111,7 @@ void resize_bench()
     {
         test.resize(i);
     }
+    std::cout << "here" << std::endl;
     std::cout << stamp_time(start) <<  "ms" <<std::endl;
     std::cout << "size decrease one by one" << std::endl;
     start = chrono_init();
