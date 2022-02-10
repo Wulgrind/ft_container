@@ -8,50 +8,34 @@
 
 int	main()
 {
-	{
+		ft::map<int, int> ft_c0;
+		ft::map<int, int> std_c0;
 
-		std::map<double,int> 				std_c0;
-		ft::map<double,int> 				ft_c0;
+		srand(reinterpret_cast<long unsigned int>(&std_c0));
+		size_t	testSize = 20 + rand() % 10000;
 
-		// insert some values:
-		std_c0[1]= 42 ;
-		std_c0[0] = 0;
-		std_c0[-4] = 21;
-
-		ft_c0[1]= 42 ;
-		ft_c0[0] = 0;
-		ft_c0[-4] = 21;
-
-		std::map<double, int>::iterator		std_it_1 = std_c0.begin();
-		ft::map<double, int>::iterator			ft_it_1 = ft_c0.begin();
-
-
-		std_it_1->second = 21;
-		ft_it_1->second = 21;
-
-		std::map<double, int>::iterator		std_it_2(std_it_1);
-		ft::map<double, int>::iterator		ft_it_2(ft_it_1);
-		std::map<double, int>::iterator		std_it_3;
-		ft::map<double, int>::iterator		ft_it_3;
-		std_it_3 = std_it_1;
-		ft_it_3 = ft_it_1;
-	}
-	{
-		ft::map<double, int>	ft_c0;
-		std::map<double, int>	std_c0;
-		size_t				testSize = 10;
-
-
+		int		val;
+		std::vector<int>	testValues;
+		testValues.reserve(testSize);
 		for (size_t i = 1; i < testSize; i++)	{
-			ft_c0.insert(ft::make_pair<double, int>(i, 0));
-			std_c0.insert(std::make_pair<double, int>(i, 0));
+			val = rand()%4200;
+			testValues.push_back(val);
+			if (i % 2 == 0)	{
+				ft_c0[val];
+				std_c0[val];
+			}
+			else	{
+				ft_c0[val] = i;
+				std_c0[val] = i;
+			}
 		}
-		ft::map<double, int>::iterator		ft_it = ft_c0.begin();
-		ft::map<double, int>::iterator		ft_it2 = ft_c0.begin();
-		ft::map<double, int>::iterator		ft_itend = ft_c0.end();
-		//ft_it--;
-		ft_it2 = ft_it;
-	}
+
+	/*	bool	success = true;
+		std::vector<int>::iterator it = testValues.begin();
+		std::vector<int>::iterator ite = testValues.end();
+		for (int i = 0; it != ite && success == true; i++, it++)	{
+			success = (ft_c0[*it] == std_c0[*it]);
+		}*/
 
 	 /*ft::vector<std::string> test;
 

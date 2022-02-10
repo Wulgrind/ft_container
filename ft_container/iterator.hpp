@@ -257,12 +257,12 @@ namespace ft {
 				this->p = this->p->parent;
 				return *this;
 			}
-			if(this->p->gauche != 0){
+			if(this->p->gauche != NULL){
 				this->p = this->p->gauche;
-				while(this->p->droit != 0)
+				while(this->p->droit != NULL)
 					this->p = this->p->droit;
 			}
-			else {
+			else if (this->p->parent != NULL){
 				noeud<T> *parentp = this->p->parent;
 				while (this->p == parentp->gauche) {
 					this->p = parentp;

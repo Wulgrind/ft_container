@@ -146,20 +146,33 @@ namespace ft
 					this->insert(ft::make_pair(k, mapped_type()));
 				noeud<value_type> *temp = this->racine;
 				while (temp->clé.first != k){
-					if (temp->gauche != NULL && (cmp(temp->clé.first , k) == 0))
+					if (temp->gauche != NULL && (cmp(temp->clé.first , k) == 0)){
 						temp = temp->gauche;
-					else if (temp->droit != NULL && (cmp(temp->clé.first , k) == 1))
+					}
+					else if (temp->droit != NULL && (cmp(temp->clé.first , k) == 1)){
 						temp = temp->droit;
-					else if (temp->clé.first == k)
-						return (temp->clé.second);
-					else if (temp->clé.first != k){
-						this->insert(ft::make_pair(k, mapped_type()));
-						if (cmp(k , temp->clé.first) == 0)
-							temp = temp->droit;
-						else
-							temp = temp->gauche;
+					}
+					else if (temp->clé.first == k){
+						endnode->droit = pend;
 						return (temp->clé.second);
 					}
+					else if (temp->clé.first != k){
+						this->insert(ft::make_pair(k, mapped_type()));
+						/*if (cmp(k , temp->clé.first) == 0){
+							if (temp->droit)
+								temp = temp->droit;
+						}
+						else{
+							if (temp->gauche)
+								temp = temp->gauche;
+						}*/
+						temp = nodes.findreturn(racine, k);
+						endnode->droit = pend;
+						return (temp->clé.second);
+					}
+					/*else if(temp->clé.first != k){
+						
+					}*/
 				}
 				endnode->droit = pend;
 				return (temp->clé.second);
@@ -584,7 +597,6 @@ namespace ft
 				return (this->end());
 			}
 
-
 			iterator upper_bound (const key_type& k){
 				iterator start(this->racine);
 				while (start.p){
@@ -641,9 +653,12 @@ namespace ft
 				this->startnode = NULL;
 				this->endnode = NULL;
 				this->racine = NULL;
-				while (start->first != end->first){
-					insert(start.p->clé);
-					start++;
+				if (start != NULL && end != NULL)
+				{
+					while (start->first != end->first){
+						insert(start.p->clé);
+						start++;
+					}
 				}
 				createpend();
 				return (*this);

@@ -230,6 +230,20 @@ namespace ft
 			else
 				return (0);
 		}
+
+
+		noeud<T> * findreturn(noeud<T> *racine, const first_type & val) const
+		{
+			while (racine->clé.first != val){
+				if (racine->gauche != NULL && (cmp(racine->clé.first , val) == 0))
+					racine = racine->gauche;
+				else if (racine->droit != NULL && (cmp(racine->clé.first , val) == 1))
+					racine = racine->droit;
+				else
+					break;
+			}
+			return (racine);
+		}
 		
 		noeud<T> * findreturn(noeud<T> *racine, noeud<T> *val){
 			while (racine->clé.first != val->clé.first){
