@@ -8,27 +8,56 @@
 
 int	main()
 {
-		ft::map<int, int> ft_c0;
-		ft::map<int, int> std_c0;
+		
 
-		srand(reinterpret_cast<long unsigned int>(&std_c0));
-		size_t	testSize = 20 + rand() % 10000;
-
-		int		val;
-		std::vector<int>	testValues;
-		testValues.reserve(testSize);
-		for (size_t i = 1; i < testSize; i++)	{
-			val = rand()%4200;
-			testValues.push_back(val);
-			if (i % 2 == 0)	{
-				ft_c0[val];
-				std_c0[val];
-			}
-			else	{
-				ft_c0[val] = i;
-				std_c0[val] = i;
-			}
+		int test_size = 1000;
+		std::vector<ft::pair<int, int> >	ft_val_0(test_size);
+		std::vector<std::pair<int, int> >	std_val_0(test_size);
+		for (int i = 0; i < test_size; i++)	{
+			srand(i);
+			int val = rand() % test_size;
+			ft_val_0[i] = ft::make_pair(val, i);
+			std_val_0[i] = std::make_pair(val, i);
 		}
+
+		std::map<int, int>	std_c0(std_val_0.begin(), std_val_0.end());
+		ft::map<int, int>	ft_c0(ft_val_0.begin(), ft_val_0.end());
+
+		ft::map<int, int>	ft_c1;
+		std::map<int, int>	std_c1;
+
+		std::vector<ft::pair<int, int> >	ft_val_1(test_size);
+		std::vector<std::pair<int, int> >	std_val_1(test_size);
+		for (int i = 0; i < test_size / 2; i++)	{
+			srand(i);
+			int val = rand() % test_size;
+			ft_val_1[i] = ft::make_pair(val, test_size - i);
+			std_val_1[i] = std::make_pair(val, test_size - i);
+		}
+		std::vector<int>	val_1(1, 42);
+		std::map<int, int>	std_c2(std_val_1.begin(), std_val_1.end());
+		ft::map<int, int>	ft_c2(ft_val_1.begin(), ft_val_1.end());
+
+		ft::map<int, int>	ft_c3;
+		std::map<int, int>	std_c3;
+		ft_c3.insert(ft::make_pair(42, 21));
+		std_c3.insert(std::make_pair(42, 21));
+
+		ft_c0 = ft_c1;
+		ft_c1 = ft_c2;
+		std_c0 = std_c1;
+		std_c1 = std_c2;
+
+		std::cout << ft_c1.size() << std::endl;
+		std::cout << ft_c2.size() << std::endl;
+		std::cout << std_c1.size() << std::endl;
+
+		/*std_c0.clear();
+		ft_c0[42] = 21;
+		ft_c0[21] = 42;
+		std_c0[42] = 21;
+		std_c0[21] = 42;*/
+
 
 	/*	bool	success = true;
 		std::vector<int>::iterator it = testValues.begin();

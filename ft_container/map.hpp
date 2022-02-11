@@ -291,6 +291,7 @@ namespace ft
 			}
 
 			void erase (iterator position){ // Afin de respecter les propriétés de l'arbre , après chaque erase si la valeur effacée a des enfants nous devons prendre soit la plus petite des plus grandes soit la plus grande des plus petites pour prendre son emplacement.
+				//std::cout << "test" << std::endl;
 				noeud<value_type> *temp = position.p;
 				noeud<value_type> *temp2 = temp;
 				if (temp == endnode && endnode->parent == NULL)
@@ -301,32 +302,28 @@ namespace ft
 					endnode->droit = NULL;
 				if (temp->gauche != NULL && temp->droit != NULL) 
 				{
+				//	std::cout << "test2" << std::endl;
 				/*	std::cout << temp->clé.first << std::endl;
 					std::cout << temp->droit->clé.first << std::endl;
 					std::cout << temp->gauche->clé.first << std::endl;
 					std::cout << temp->gauche->gauche->clé.first << std::endl;
 					std::cout << temp->gauche->gauche->gauche->clé.first << std::endl;*/
-					//std::cout << "here" << std::endl;
 					temp = temp->gauche;
 					if (temp->droit != NULL){
-					//	std::cout << "test2" << std::endl;
 						while (temp->droit != NULL){
 						//	std::cout << "TEEEEST" << std::endl; 
 							temp = temp->droit;
 						}
 					//	std::cout << temp->clé.first << std::endl;
 						if (temp->parent != NULL){
-						//	std::cout << "test3" << std::endl;
 							if (temp->parent->droit == temp){
 								temp->parent->droit = temp->gauche;
 								if (temp->gauche)
 									temp->gauche->parent = temp->parent;
 								temp->gauche = NULL;
 							}
-						//	std::cout << "test3b" << std::endl;
 						}
 						else{
-						//	std::cout << "test4" << std::endl;
 							temp->parent->gauche = temp->gauche;
 							if (temp->gauche)
 								temp->gauche->parent = temp->parent;
@@ -341,7 +338,6 @@ namespace ft
 						}
 					}
 					else{
-					//	std::cout << "test5" << std::endl;
 						if (temp2->parent){
 							if (temp2->clé.first < temp2->parent->clé.first)
 								temp2->parent->gauche = temp;
@@ -360,7 +356,6 @@ namespace ft
 						if (temp2->gauche)
 							temp2->gauche->parent = temp;
 					}
-					//std::cout << "test6" << std::endl;
 					temp->parent = temp2->parent;
 					temp->droit = temp2->droit;
 					if (temp2->droit)
@@ -396,9 +391,10 @@ namespace ft
 					temp->couleur = temp2->couleur;
 				}*/
 				else if (temp->gauche == NULL && temp->droit == NULL) {
-					if (temp->parent->clé.first < temp->clé.first)
+				//	std::cout << "test3" << std::endl;
+					if (temp->parent && temp->parent->clé.first < temp->clé.first)
 						temp->parent->droit = NULL;
-					else
+					else if (temp->parent)
 						temp->parent->gauche = NULL;
 					if (temp->parent != NULL)
 						temp = temp->parent;
@@ -406,6 +402,7 @@ namespace ft
 						temp = NULL;
 				}
 				else {
+					//std::cout << "test4" << std::endl;
 					if (temp->droit != NULL)
 						temp = temp->droit;
 					else
@@ -428,9 +425,9 @@ namespace ft
 					this->endnode = temp;
 				if (temp2 == this->racine)
 					this->racine = temp;
-			//	std::cout << "here1" << std::endl;
+				//std::cout << "Test5" << std::endl;
 				nodes.remove(&this->racine, temp, temp2);
-			//	std::cout << "here2" << std::endl;
+				//std::cout << "test6" << std::endl;
 				if (endnode != NULL)
 					endnode->droit = this->pend;
 				this->sizenode--;
@@ -459,7 +456,6 @@ namespace ft
 						return (0);
 					}
 				}
-				//std::cout << "test" << std::endl;
 				iterator temp2;
 				temp2.p = temp;
 				this->erase(temp2);
@@ -469,6 +465,7 @@ namespace ft
 
 			void erase (iterator first, iterator last)
 			{
+				//std::cout << "here" << std::endl;
 				size_t i = 0;
 				while (first != last)
 				{
@@ -478,6 +475,7 @@ namespace ft
 					first = temp;
 					i++;
 				}
+				//std::cout << "here3" << std::endl;
 				if (sizenode == 0){
 					this->racine = NULL;
 					this->startnode = NULL;
@@ -518,7 +516,6 @@ namespace ft
 				this->startnode = NULL;
 				this->endnode = NULL;
 				this->sizenode = 0;
-
 			}
 
 			key_compare key_comp() const{ // element de comparaison avec l'element key.
@@ -646,9 +643,14 @@ namespace ft
 			}
 
 			map & operator=(map const & rhs){
+			//	std::cout << "here" << std::endl;
+				if (*this == rhs)
+					return (*this);
 				this->clear();
+			//	std::cout << "here2" << std::endl;
 				const_iterator start = rhs.begin();
-				const_iterator end = rhs.end();
+				const_iterator end = --rhs.end();
+			//	std::cout << "here3" << std::endl;
 				this->sizenode = 0;
 				this->startnode = NULL;
 				this->endnode = NULL;
@@ -656,11 +658,16 @@ namespace ft
 				if (start != NULL && end != NULL)
 				{
 					while (start->first != end->first){
+				//		std::cout << "here4" << std::endl;
 						insert(start.p->clé);
 						start++;
 					}
+					insert(start.p->clé);
 				}
+				//std::cout << "here5" << std::endl;
 				createpend();
+				//endnode->droit = pend;
+				//std::cout << "here6" << std::endl;
 				return (*this);
 			}; 
 		
@@ -718,44 +725,64 @@ namespace ft
 	void swap( ft::map<Key,T,Compare,Alloc>& lhs, ft::map<Key,T,Compare,Alloc>& rhs ){
 		lhs.swap(rhs);
 	}
+
+	template <class Key, class T>
+	bool operator== (const ft::map<Key, T>& lhs, const ft::map<Key, T>& rhs) // Obligé de mettre ft car en dehors du namespace.
+	{
+		if (lhs.size() != rhs.size())
+			return (false);
+		typename ft::map<Key, T>::const_iterator start1 = lhs.begin();
+		typename ft::map<Key, T>::const_iterator start2 = rhs.begin();
+		while (start1 != lhs.end()){
+			if (start1->first != start2->first)
+				return (false);
+			if (start1->second != start2->second)
+				return (false);
+			start1++;
+			start2++;
+		}
+		return (true);
+	}
+
+	template <class Key, class T>
+	bool operator== (ft::map<Key, T>& lhs, const ft::map<Key, T>& rhs) // Obligé de mettre ft car en dehors du namespace.
+	{
+		if (lhs.size() != rhs.size())
+			return (false);
+		typename ft::map<Key, T>::const_iterator start1 = lhs.begin();
+		typename ft::map<Key, T>::const_iterator start2 = rhs.begin();
+		while (start1 != lhs.end()){
+			if (start1->first != start2->first)
+				return (false);
+			if (start1->second != start2->second)
+				return (false);
+			start1++;
+			start2++;
+		}
+		return (true);
+	}
+
+	template <class Key, class T>
+	bool operator!= (const ft::map<Key, T>& lhs, const ft::map<Key, T>& rhs)
+	{
+		if (lhs == rhs)
+			return (false);
+		return (true);
+	}
+
+	template <class Key, class T>
+	bool operator<  (const ft::map<Key, T>& lhs, const ft::map<Key, T>& rhs){return (ft::lexicographical_compareMap(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));}
+
+	template <class Key, class T>
+	bool operator<= (const ft::map<Key, T>& lhs, const ft::map<Key, T>& rhs){return (!(rhs < lhs));} // si lhs est supérieur à rhs, il ne peut pas être inférieur ou égal.}
+
+	template <class Key, class T>
+	bool operator>  (const ft::map<Key, T>& lhs, const ft::map<Key, T>& rhs){return (!(lhs <= rhs));}
+
+	template <class Key, class T>
+	bool operator>= (const ft::map<Key,T>& lhs, const ft::map<Key,T>& rhs){return (!(lhs < rhs));}
+
 };
 
-template <class Key, class T>
-bool operator== (const ft::map<Key, T>& lhs, const ft::map<Key, T>& rhs) // Obligé de mettre ft car en dehors du namespace.
-{
-	if (lhs.size() != rhs.size())
-		return (false);
-	typename ft::map<Key, T>::const_iterator start1 = lhs.begin();
-	typename ft::map<Key, T>::const_iterator start2 = rhs.begin();
-	while (start1 != lhs.end()){
-		if (start1->first != start2->first)
-			return (false);
-		if (start1->second != start2->second)
-			return (false);
-		start1++;
-		start2++;
-	}
-	return (true);
-}
-
-template <class Key, class T>
-bool operator!= (const ft::map<Key, T>& lhs, const ft::map<Key, T>& rhs)
-{
-	if (lhs == rhs)
-		return (false);
-	return (true);
-}
-
-template <class Key, class T>
-bool operator<  (const ft::map<Key, T>& lhs, const ft::map<Key, T>& rhs){return (ft::lexicographical_compareMap(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));}
-
-template <class Key, class T>
-bool operator<= (const ft::map<Key, T>& lhs, const ft::map<Key, T>& rhs){return (!(rhs < lhs));} // si lhs est supérieur à rhs, il ne peut pas être inférieur ou égal.}
-
-template <class Key, class T>
-bool operator>  (const ft::map<Key, T>& lhs, const ft::map<Key, T>& rhs){return (!(lhs <= rhs));}
-
-template <class Key, class T>
-bool operator>= (const ft::map<Key,T>& lhs, const ft::map<Key,T>& rhs){return (!(lhs < rhs));}
 
 #endif
