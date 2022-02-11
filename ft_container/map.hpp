@@ -511,7 +511,10 @@ namespace ft
 			void clear(){
 				if (this->sizenode == 0)
 					return;
-				this->erase(this->begin(), this->end());
+			//	std::cout << "here" << std::endl;
+				erase(--end());
+				//std::cout << "here2" << std::endl;
+			//	this->erase(this->begin(), this->end());
 				this->racine = NULL;
 				this->startnode = NULL;
 				this->endnode = NULL;
@@ -527,10 +530,13 @@ namespace ft
 			}
 
 			iterator find (const key_type& k){
+				if (sizenode == 0)
+					return (end());
 				if (nodes.find(this->racine, k) == 1)
 					return (this->end());
 				noeud<value_type> *temp = this->racine;
 				while (temp->clé.first != k){
+					
 					if (temp->gauche != NULL && temp->clé.first >= k)
 						temp = temp->gauche;
 					else if (temp->droit != NULL && temp->clé.first <= k)
@@ -546,6 +552,8 @@ namespace ft
 			}
 
 			const_iterator find (const key_type& k) const{
+				if (sizenode == 0)
+					return (end());
 				if (nodes.find(this->racine, k) == 1)
 					return (this->end());
 				noeud<value_type> *temp = this->racine;

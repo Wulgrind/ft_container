@@ -8,63 +8,35 @@
 
 int	main()
 {
-		
-
-		int test_size = 1000;
-		std::vector<ft::pair<int, int> >	ft_val_0(test_size);
-		std::vector<std::pair<int, int> >	std_val_0(test_size);
-		for (int i = 0; i < test_size; i++)	{
+		size_t			testSize = 3000;
+		int findKey = 42;
+		std::vector<ft::pair<int, int> >	ft_val_0(testSize);
+		std::vector<std::pair<int, int> >	std_val_0(testSize);
+		for (size_t i = 0; i < testSize; i++)	{
 			srand(i);
-			int val = rand() % test_size;
+			int val = rand() % testSize;
+			if (i == testSize / 2)
+				findKey = val;
 			ft_val_0[i] = ft::make_pair(val, i);
 			std_val_0[i] = std::make_pair(val, i);
 		}
 
 		std::map<int, int>	std_c0(std_val_0.begin(), std_val_0.end());
 		ft::map<int, int>	ft_c0(ft_val_0.begin(), ft_val_0.end());
+		std::map<int, int>::iterator	std_c0_ret = std_c0.find(findKey);
+		ft::map<int, int>::iterator	ft_c0_ret = ft_c0.find(findKey);
+		std_c0_ret = std_c0.find(testSize * 2);
+		ft_c0_ret = ft_c0.find(testSize * 2);
 
-		ft::map<int, int>	ft_c1;
-		std::map<int, int>	std_c1;
+		std_c0_ret = std_c0.find(-42);
+		ft_c0_ret = ft_c0.find(-42);
+	//	std::cout << "bonjour" << std::endl;
+		ft_c0.clear();
+		//std::cout << "bonjour2" << std::endl;
+		//std_c0.clear();
 
-		std::vector<ft::pair<int, int> >	ft_val_1(test_size);
-		std::vector<std::pair<int, int> >	std_val_1(test_size);
-		for (int i = 0; i < test_size / 2; i++)	{
-			srand(i);
-			int val = rand() % test_size;
-			ft_val_1[i] = ft::make_pair(val, test_size - i);
-			std_val_1[i] = std::make_pair(val, test_size - i);
-		}
-		std::vector<int>	val_1(1, 42);
-		std::map<int, int>	std_c2(std_val_1.begin(), std_val_1.end());
-		ft::map<int, int>	ft_c2(ft_val_1.begin(), ft_val_1.end());
-
-		ft::map<int, int>	ft_c3;
-		std::map<int, int>	std_c3;
-		ft_c3.insert(ft::make_pair(42, 21));
-		std_c3.insert(std::make_pair(42, 21));
-
-		ft_c0 = ft_c1;
-		ft_c1 = ft_c2;
-		std_c0 = std_c1;
-		std_c1 = std_c2;
-
-		std::cout << ft_c1.size() << std::endl;
-		std::cout << ft_c2.size() << std::endl;
-		std::cout << std_c1.size() << std::endl;
-
-		/*std_c0.clear();
-		ft_c0[42] = 21;
-		ft_c0[21] = 42;
-		std_c0[42] = 21;
-		std_c0[21] = 42;*/
-
-
-	/*	bool	success = true;
-		std::vector<int>::iterator it = testValues.begin();
-		std::vector<int>::iterator ite = testValues.end();
-		for (int i = 0; it != ite && success == true; i++, it++)	{
-			success = (ft_c0[*it] == std_c0[*it]);
-		}*/
+		//std_c0_ret = std_c0.find(42);
+		ft_c0_ret = ft_c0.find(42);
 
 	 /*ft::vector<std::string> test;
 
