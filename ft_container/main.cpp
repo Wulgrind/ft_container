@@ -8,12 +8,15 @@
 
 int	main()
 {
-		size_t			testSize = 3000;
+
+		#define exampleClass int
+		
+		size_t			testSize = 5000;
 		int findKey = 42;
-		std::vector<ft::pair<int, int> >	ft_val_0(testSize);
-		std::vector<std::pair<int, int> >	std_val_0(testSize);
+
+		std::vector<ft::pair<int, exampleClass> >	ft_val_0(testSize);
+		std::vector<std::pair<int, exampleClass> >	std_val_0(testSize);
 		for (size_t i = 0; i < testSize; i++)	{
-			srand(i);
 			int val = rand() % testSize;
 			if (i == testSize / 2)
 				findKey = val;
@@ -21,23 +24,21 @@ int	main()
 			std_val_0[i] = std::make_pair(val, i);
 		}
 
-		std::map<int, int>	std_c0(std_val_0.begin(), std_val_0.end());
-		ft::map<int, int>	ft_c0(ft_val_0.begin(), ft_val_0.end());
-		std::map<int, int>::iterator	std_c0_ret = std_c0.find(findKey);
-		ft::map<int, int>::iterator	ft_c0_ret = ft_c0.find(findKey);
-		std_c0_ret = std_c0.find(testSize * 2);
-		ft_c0_ret = ft_c0.find(testSize * 2);
+		std::map<int, exampleClass>	std_c0(std_val_0.begin(), std_val_0.end());
+		ft::map<int, exampleClass>	ft_c0(ft_val_0.begin(), ft_val_0.end());
 
-		std_c0_ret = std_c0.find(-42);
-		ft_c0_ret = ft_c0.find(-42);
-	//	std::cout << "bonjour" << std::endl;
-		ft_c0.clear();
-		//std::cout << "bonjour2" << std::endl;
-		//std_c0.clear();
+		std::map<int, exampleClass>::const_iterator	std_c0_ret = std_c0.lower_bound(findKey);
 
-		//std_c0_ret = std_c0.find(42);
-		ft_c0_ret = ft_c0.find(42);
+		ft::map<int, exampleClass>::const_iterator	ft_c0_ret = ft_c0.lower_bound(findKey);
 
+		std::cout << ft_c0_ret->first << std::endl;
+		std::cout << std_c0_ret->first << std::endl;
+
+		if(ft_c0_ret->second == std_c0_ret->second && ft_c0_ret->first == std_c0_ret->first)
+		{
+			std::cout << "1" << std::endl;
+		}
+		
 	 /*ft::vector<std::string> test;
 
 	for (int i = 0; i < 1000000; i++)

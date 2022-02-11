@@ -267,7 +267,7 @@ namespace ft
 		noeud<T> **remove (noeud<T> **racine, noeud <T> *temp, noeud <T> *temp2){
 		//	std::cout << "test1" << std::endl;
 			if ((temp2 && temp2->couleur == 1) || (temp && temp->couleur == 1)){ // si la valeur supprimée ou son enfant sont rouges, on passe noir pour garder l'équilibre mais pas si doublement rouge (dans le cas où l'enfant immédiat avait deux branches).
-			//	std::cout << "test2" << std::endl;
+		//		std::cout << "test2" << std::endl;
 				if (temp2 && temp2->couleur == 1 && temp && temp->couleur == 1)
 					temp->couleur = 1;
 				else
@@ -284,24 +284,25 @@ namespace ft
 				if (s && s == s->parent->droit && s->couleur == 0 && ((s->droit && s->droit->couleur == 1) || (s->gauche && s->gauche->couleur == 1))){
 				//	std::cout << "test1a" << std::endl;
 					if (s->droit && s->droit->couleur == 1){
-					//	std::cout << "test2a" << std::endl;
+				//		std::cout << "test2a" << std::endl;
 						s->droit->couleur = 0;
 						r = s->gauche;
 						if (p == *racine)
 							*racine = s;
-					//	std::cout << "test3a" << std::endl;
+				//		std::cout << "test3a" << std::endl;
 						s->parent = p->parent;
 						if (p->parent && p == p->parent->droit)
 							p->parent->droit = s;
 						else if (p->parent)
 							p->parent->gauche = s;
-						//std::cout << "test4a" << std::endl;
+				//		std::cout << "test4a" << std::endl;
 						p->parent = s;
 						p->droit = s->gauche;
 						if (s->gauche)
 							s->gauche->parent = p;
 						s->gauche = p;
-						r->parent = p;
+						if (r)
+							r->parent = p;
 						p->droit = r;
 					}
 					else{
@@ -314,7 +315,7 @@ namespace ft
 							r->droit->parent = s;
 						r->droit = s;
 						s->parent = r;
-						//std::cout << "test1b1" << std::endl;
+					//	std::cout << "test1b1" << std::endl;
 						r->parent = p->parent;
 						if (*racine == p)
 							*racine = r;
@@ -322,7 +323,7 @@ namespace ft
 							p->parent->droit = r;
 						else if (p->parent)
 							p->parent->gauche = r;
-						//std::cout << "test1b2" << std::endl;
+					//	std::cout << "test1b2" << std::endl;
 						p->parent = r;
 						p->droit = r->gauche;
 						if (r->gauche)
@@ -332,26 +333,33 @@ namespace ft
 					}
 				}
 				else if (s && s == s->parent->gauche && s->couleur == 0 && ((s->droit && s->droit->couleur == 1) || (s->gauche && s->gauche->couleur == 1))){
-					//std::cout << "test1c" << std::endl;
+				//	std::cout << "test1c" << std::endl;
 					if (s->gauche->couleur == 1){
+					//	std::cout << "test2c" << std::endl;
 						s->gauche->couleur = 0;
 						r = s->droit;
 						if (p == *racine)
 							*racine = s;
 						s->parent = p->parent;
+				//			std::cout << "test3c" << std::endl;
 						if (p->parent && p == p->parent->droit)
 							p->parent->droit = s;
 						else if (p->parent)
 							p->parent->gauche = s;
+					//		std::cout << "test4c" << std::endl;
 						p->parent = s;
 						p->gauche = s->droit;
 						if (s->droit)
 							s->droit->parent = p;
+				//		std::cout << "test5c" << std::endl;
 						s->droit = p;
-						r->parent = p;
+						if (r)
+							r->parent = p;
 						p->gauche = r;
+				//		std::cout << "test6c" << std::endl;
 					}
 					else{
+				//		std::cout << "test7c" << std::endl;
 						r = s->droit;
 						p->gauche = r;
 						r->parent = p;
@@ -376,7 +384,7 @@ namespace ft
 					}
 				}
 				else if (s && s->couleur == 0 && (s->droit == NULL || s->droit->couleur == 0) && (s->gauche == NULL || s->gauche->couleur == 0)){
-				//	std::cout << "test1d" << std::endl;
+			//		std::cout << "test1d" << std::endl;
 					s->couleur = 1;
 					if (p->couleur == 1)
 						p->couleur = 0;
@@ -384,21 +392,21 @@ namespace ft
 						this->remove(racine, p, temp);
 				}
 				else if (s && s->couleur == 1){
-					//std::cout << "test1e" << std::endl;
+				//	std::cout << "test1e" << std::endl;
 					p->couleur = 1;
 					if (s == p->droit){
-						//std::cout << "test1e1" << std::endl;
+			//			std::cout << "test1e1" << std::endl;
 						s->couleur = 0;
 						s->parent = p->parent;
-						//std::cout << "test1e1a" << std::endl;
+				//		std::cout << "test1e1a" << std::endl;
 						if (*racine == p)
 							*racine = s;
-					//	std::cout << "test1e2" << std::endl;
+			//			std::cout << "test1e2" << std::endl;
 						if (p->parent && p->parent->gauche == p)
 							p->parent->gauche = s;
 						else if (p->parent)
 							p->parent->droit = s;
-						//std::cout << "test1e3" << std::endl;
+				//		std::cout << "test1e3" << std::endl;
 						p->parent = s;
 						p->droit = s->gauche;
 						if (s->gauche)
@@ -406,7 +414,7 @@ namespace ft
 						s->gauche = p;
 					}
 					else if (s == p->gauche){
-					//	std::cout << "test2e" << std::endl;
+				//		std::cout << "test2e" << std::endl;
 						s->couleur = 0;
 						s->parent = p->parent;
 						if (*racine == p)

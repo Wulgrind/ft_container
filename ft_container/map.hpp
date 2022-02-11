@@ -425,13 +425,15 @@ namespace ft
 					this->endnode = temp;
 				if (temp2 == this->racine)
 					this->racine = temp;
-				//std::cout << "Test5" << std::endl;
+		//		std::cout << "Test5" << std::endl;
 				nodes.remove(&this->racine, temp, temp2);
-				//std::cout << "test6" << std::endl;
+			//	std::cout << "test6" << std::endl;
 				if (endnode != NULL)
 					endnode->droit = this->pend;
 				this->sizenode--;
+		//		std::cout << "test7" << std::endl;
 				delete (temp2);
+			//	std::cout << "test8" << std::endl;
 			}
 
 			size_type erase (const key_type& k)
@@ -512,9 +514,10 @@ namespace ft
 				if (this->sizenode == 0)
 					return;
 			//	std::cout << "here" << std::endl;
-				erase(--end());
+		//		erase(--end());
+			//	std::cout << "test9" << std::endl;
 				//std::cout << "here2" << std::endl;
-			//	this->erase(this->begin(), this->end());
+				this->erase(this->begin(), this->end());
 				this->racine = NULL;
 				this->startnode = NULL;
 				this->endnode = NULL;
@@ -573,6 +576,8 @@ namespace ft
 			}
 
 			size_type count (const key_type& k) const{
+				if (sizenode == 0)
+					return (0);
 				if (nodes.find(this->racine, k) == 1)
 					return (0);
 				return (1);
