@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_map_upper_bound.cpp                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bvalette <bvalette@student.42.fr>          +#+  +:+       +#+        */
+/*   By: qbrillai <qbrillai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/21 15:37:34 by bvalette          #+#    #+#             */
-/*   Updated: 2021/09/06 09:53:21 by etakouer         ###   ########.fr       */
+/*   Updated: 2022/02/11 20:18:50 by qbrillai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ test_map_upper_bound( void )	{
 			testBool(ft_c0_ret == ft_c0.end(), __FILE__, __LINE__);
 		else	{
 			if (testBool(ft_c0_ret != ft_c0.end(), __FILE__, __LINE__) == true)
-				testBool(ft_c0_ret->first == std_c0_ret->first
-					&& ft_c0_ret->second == std_c0_ret->second, __FILE__, __LINE__);
+				testBool(ft_c0_ret->first == std_c0_ret->first && ft_c0_ret->second == std_c0_ret->second, __FILE__, __LINE__);
 		}
 
 		test_map_const_upper_bound(findKey, std_c0, ft_c0);

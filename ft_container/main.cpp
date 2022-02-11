@@ -14,27 +14,57 @@ int	main()
 		size_t			testSize = 5000;
 		int findKey = 42;
 
+
 		std::vector<ft::pair<int, exampleClass> >	ft_val_0(testSize);
 		std::vector<std::pair<int, exampleClass> >	std_val_0(testSize);
+		/*srand(time(NULL));
 		for (size_t i = 0; i < testSize; i++)	{
 			int val = rand() % testSize;
 			if (i == testSize / 2)
 				findKey = val;
 			ft_val_0[i] = ft::make_pair(val, i);
 			std_val_0[i] = std::make_pair(val, i);
-		}
+		}*/
 
 		std::map<int, exampleClass>	std_c0(std_val_0.begin(), std_val_0.end());
 		ft::map<int, exampleClass>	ft_c0(ft_val_0.begin(), ft_val_0.end());
 
-		std::map<int, exampleClass>::const_iterator	std_c0_ret = std_c0.lower_bound(findKey);
+		ft::pair< ft::map<int, exampleClass>::iterator, ft::map<int, exampleClass>::iterator>	ft_c0_ret =  ft_c0.equal_range(findKey);
+		std::pair< std::map<int, exampleClass>::iterator, std::map<int, exampleClass>::iterator>	std_c0_ret = std_c0.equal_range(findKey);
 
-		ft::map<int, exampleClass>::const_iterator	ft_c0_ret = ft_c0.lower_bound(findKey);
+		std::cout << ft_c0_ret.first->first << std::endl;
+		std::cout << ft_c0_ret.first->second << std::endl;
 
-		std::cout << ft_c0_ret->first << std::endl;
-		std::cout << std_c0_ret->first << std::endl;
+		std::cout << std_c0_ret.first->first << std::endl;
+		std::cout << std_c0_ret.first->second << std::endl;
 
-		if(ft_c0_ret->second == std_c0_ret->second && ft_c0_ret->first == std_c0_ret->first)
+		ft::map<int, exampleClass>::iterator ft_c1_ret;
+		std::map<int, exampleClass>::iterator std_c1_ret;
+
+		ft_c1_ret =  ft_c0.lower_bound(findKey);
+		std_c1_ret =  std_c0.lower_bound(findKey);
+
+		std::cout << ft_c1_ret->first << std::endl;
+		std::cout << ft_c1_ret->second << std::endl;
+
+		std::cout << std_c1_ret->first << std::endl;
+		std::cout << std_c1_ret->second << std::endl;
+
+
+		ft_c1_ret =  ft_c0.upper_bound(findKey);
+		std_c1_ret =  std_c0.upper_bound(findKey);
+
+		std::cout << ft_c1_ret->first << std::endl;
+		std::cout << ft_c1_ret->second << std::endl;
+
+		std::cout << std_c1_ret->first << std::endl;
+		std::cout << std_c1_ret->second << std::endl;
+
+		std::cout << (++ft_c0.begin())->first << std::endl;
+		std::cout << (++std_c0.begin())->first << std::endl;
+
+
+		if(ft_c0_ret.first->first == std_c0_ret.first->first && ft_c0_ret.first->second == std_c0_ret.first->second)
 		{
 			std::cout << "1" << std::endl;
 		}

@@ -643,10 +643,10 @@ namespace ft
 			pair<const_iterator,const_iterator> equal_range (const key_type& k) const{
 				const_iterator it(lower_bound(k));
 				const_iterator it2(upper_bound(k));
-				if (it != it2)
+				//if (it != it2)
 					return (ft::make_pair<const_iterator, const_iterator>(it, it2));
-				else
-					return (ft::make_pair<const_iterator, const_iterator>(it2 , it2));
+				//else
+				//	return (ft::make_pair<const_iterator, const_iterator>(it2 , it2));
 			}
 
 			allocator_type get_allocator() const
