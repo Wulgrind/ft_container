@@ -1,7 +1,19 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: qbrillai <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/03/21 10:29:14 by qbrillai          #+#    #+#              #
+#    Updated: 2022/03/21 16:26:52 by qbrillai         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 #Compilation
 NAME = ft_container
 CC = clang++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 
 #SOURCES
 

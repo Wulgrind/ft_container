@@ -584,11 +584,11 @@ namespace ft
 			}
 
 			iterator lower_bound (const key_type& k){
-				iterator start(this->racine);
-				while (start.p){
-					if (cmp(start.p->clé.first, k) == false)
+				iterator start(this->begin());
+				while (start != this->end()){
+					if (cmp(k , start.p->clé.first) || k == start.p->clé.first)
 						return (start);
-					if (start.p == this->endnode)
+					if (start == this->end())
 						break;
 					start++;
 				}
@@ -596,11 +596,11 @@ namespace ft
 			}
 
 			const_iterator lower_bound (const key_type& k) const{
-				iterator start(this->racine);
-				while (start.p){
-					if (cmp(start.p->clé.first, k) == false)
+				const_iterator start(this->begin());
+				while (start != this->end()){
+					if (cmp(k , start.p->clé.first) || k == start.p->clé.first)
 						return (start);
-					if (start.p == this->endnode)
+					if (start == this->end())
 						break;
 					start++;
 				}
