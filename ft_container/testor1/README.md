@@ -1,76 +1,58 @@
-<p align="center">
-  <a href="https://profile.intra.42.fr/users/bvalette" rel="noopener">
- <img width=200px src="./assets/head.png" alt="Project logo"></a>
-</p>
+- `Run_test.sh` will look for all your containers and run every test it has for each
+- If one or more container name is specified, then only listed containers will be tested
+- tests are stored in each `Test/container_name/mains` folder
+- You can pass arguments to the tester :
+	- `clean` will clean your directory and exit
+	- [...]
+- You can see compile logs in `container_name/logs`
+- You can see valgrind output (not available on mac os) in `container_name/leaks`
+- You can see test outputs in `container_name/out`
+- You can see output diff in `container_name/diff`
+- You can see error outputs in `container_name/stderror`
 
+- You can add your own tests as long as you respect these conditions:
+	- Tests must be named as : `name_main.cpp` and placed in `container_name/mains/`
+	- Tests must use
+		```#ifndef STD
+		# define NAMESPACE ft
+		#else
+		# define NAMESPACE std
+		#endif
+	
+		using namespace NAMESPACE;
 
-<h3 align="center">FT_CONTAINERS: tester</h3>
+- Test will be run once normally and once with `-D STD` option.
+- Test will be considered succesfull if outputs do not differ and if valgrind finds no leaks or errors.
+- There is a main template named `.empty_main.cpp` in `container_name/mains/`
+- Tests must use `#include "CONTAINER_UC.HPP"`. With no path prior to the file name. Include path will be set as a variable in the bash script
 
-<div align="center">
+## OUTPUTS :
 
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![License](https://img.shields.io/badge/license-GPL-lightgrey)](/LICENSE)
+- `*some_main.cpp*` seems to be invalid : *some_main.cpp* does not compile, even with the std container
+- `*some test*` does not compile : *some_main.cpp* does not compile with YOUR container, it compiles normally with std containers
+- `*some test*` seems to leak : valgrind (if available) did not find "No leaks are possible" in the output :
+	- Either program did not exit normally
+	- Or it leaks
+- `*some test*` : valgrind detected some errors : did not find "ERROR SUMMARY: 0 errors from 0 contexts" in valgrind output
 
-</div>
+If you have any question or suggestion, please feel free to PM me on slack @hbaudet ;)
 
----
+##  Notes :
 
-<p align="center">
-  <img width=100px src="./assets/cpp.png" alt="Project logo"></a>
-  <h3>This project is a tester I developed while completing the FT_CONTAINERS project at École 42.</h3>
-</p>
+- Some tests come from cplusplus.com
+- Some were written by myself (hbaudet)
+- Some were submitted by other users
 
-## 📝 Table of Contents
+## Thanks :
 
-- [About](#about)
-- [Getting Started](#getting_started)
-- [Usage](#usage)
-- [Acknowledgement](#acknowledgement)
+- Oroberts
+- [Rofernan](http://github.com/rofernan42)
+- Lmartin
+- Thgermai
+- Bbrunet
+- [...]
 
-## 🧐 About <a name = "about"></a>
+// THIS IS WIP, CHECK REGULARLY FOR UPDATES
 
-<p align="center">
-  <a href="" rel="noopener">
- <img width=800px src="./assets/preview.gif" alt="Project logo"></a>
-</p>
-
-This tester is intended to be used on FT_CONTAINERS, a École 42's project in which students have to reimplement some of the STL containers, based on c++98. This tester is designed to work for the projects as per May 2021's version. Meaning it will not test the new revision and bonuses. But you will be able to test each container individually.
-It performs tests to verify the student implementation based on STL behaviour and output comparison.
-
-Tests are performed on: 
-
-- Vector
-- Stack
-- Map
-- List
-##### Bonus part :
-- Set
-- Deque
-- Queue
-
-***NB: this test assumes you have implemented your own ft::pair (as you should).***
-
-## 🏁 Getting Started <a name = "getting_started"></a>
-
-- First, place your projects headers in directory : `./includes/your_headers_files`
-- Then update the file `./includes/your_headers.hpp` to include your files.
-
-## 👩‍💻 Usage <a name = "usage"></a>
-
-- `make` will precompile your headers and check their std98 compliance, then compile the tester.
-- `make f` will do all of the above and run every tests.
-#### To test only selected containers: 
-- `make [container names]` will perform tests on a specific containers, one after the other according to the list passed.
-- `make cpp98` will perform tests one your header to verify cpp98 compliance.
-
-- `make compile_<container_name>` will compile the specific container tests.
-
-NB: In case of failure, each test will display errors and run the next test, at the end of each container test unit, a message will show if something went wrong at any point.
-
-#### Special needs:
-In order to use the tester with valgrind or fsanitize, some tests need to reduce their memory size. Use `make valgrind_mode=1` To compile the tester with such smaller tests
-
-## ⚠️  Acknowledgement <a name = "acknowledgement"></a>
-
-Please note this test is based on my own work, you should use it as a complement of your own testes. First because it might be wrong on some points, second because you will learn much more by doing your tester than doing the project itself: you will learn how to use the STL's version, its limitations, its power etc. ... 
-
+## Incomimg :
+- Detection (and kill) of infinite loops during tests

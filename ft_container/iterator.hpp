@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iterator.hpp                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qbrillai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: qbrillai <qbrillai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 10:29:21 by qbrillai          #+#    #+#             */
-/*   Updated: 2022/03/21 10:29:22 by qbrillai         ###   ########.fr       */
+/*   Updated: 2022/03/22 14:41:32 by qbrillai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ namespace ft {
         typedef typename iter::reference             reference;
     };
 
-	template <class T> struct iterator_traits<T *> {
+	template <class T> struct iterator_traits<T *> { // specialisation pour types donnes qui peuvent utilises comme iterateurs, int ,double etc
         typedef ptrdiff_t                       difference_type;
         typedef T                               value_type;
         typedef T*                              pointer;

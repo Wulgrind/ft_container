@@ -6,7 +6,7 @@
 /*   By: qbrillai <qbrillai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 10:29:25 by qbrillai          #+#    #+#             */
-/*   Updated: 2022/03/21 19:49:08 by qbrillai         ###   ########.fr       */
+/*   Updated: 2022/03/22 15:43:29 by qbrillai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "vector.hpp"
 #include <vector>
 #include <map>
+#include <stack>
 #include "map.hpp"
 #include "iterator.hpp"
 #include "redblacktree.hpp"
@@ -443,10 +444,115 @@ int	main()
 	std::cout << "STD TEST UPPER BOUND" << std::endl;
 	std::cout << map1.upper_bound(50)->first << std::endl << std::endl;
 
-/*	std::cout << "FT TEST EQUAL RANGE" << std::endl;
-	std::cout << map0.equal_range(100).first << std::endl;
-	std::cout << map0.equal_range(100).second << std::endl;
+	std::cout << "FT TEST EQUAL RANGE" << std::endl;
+	std::cout << map0.equal_range(100).first->first << std::endl;
+	std::cout << map0.equal_range(100).first->second << std::endl;
+	std::cout << map0.equal_range(100).second->first << std::endl;
+	std::cout << map0.equal_range(100).second->second << std::endl;
 	std::cout << "STD TEST EQUAL RANGE" << std::endl;
-	std::cout << map1.equal_range(100).first << std::endl;
-	std::cout << map1.equal_range(100).second << std::endl;*/
+	std::cout << map1.equal_range(100).first->first << std::endl;
+	std::cout << map1.equal_range(100).first->second << std::endl;
+	std::cout << map0.equal_range(100).second->first << std::endl;
+	std::cout << map0.equal_range(100).second->second << std::endl;
+
+	
+	std::cout << "FT TEST GET ALLOCATOR" << std::endl;
+	std::allocator<std::pair<int, char> > alloc2 = ft_c0.get_allocator();
+	std::cout << alloc2.max_size() << std::endl << std::endl;
+	std::cout << "STD TEST GET ALLOCATOR" << std::endl;
+	std::allocator<std::pair<int, char> > alloc3 = std_c0.get_allocator();
+	std::cout << alloc3.max_size() << std::endl << std::endl;
+
+	std::cout << "FT TEST SWAP" << std::endl;
+	map0.swap(map2);
+	ft_map(map0);
+	std::cout << "STD TEST SWAP" << std::endl;
+	map1.swap(map3);
+	std_map(map1);
+
+	std::cout << "FT TEST =" << std::endl;
+	map0 = map2;
+	ft_map(map0);
+	std::cout << "STD TEST =" << std::endl;
+	map1 = map3;
+	std_map(map1);
+
+	std::cout << "FT TEST RELATIONAL OPERATORS" << std::endl;
+	std::cout << (map0.begin() == map0.end()) << std::endl;
+	std::cout << (map0.begin() != map0.end()) << std::endl;
+	std::cout << ((*map0.begin()).first) << std::endl;
+	std::cout << map0.begin()->first << std::endl;
+	std::cout << "STD TEST RELATIONAL OPERATORS" << std::endl;
+	std::cout << (map1.begin() == map1.end()) << std::endl;
+	std::cout << (map1.begin() != map1.end()) << std::endl;
+	std::cout << ((*map1.begin()).first) << std::endl;
+	std::cout << map1.begin()->first << std::endl << std::endl;
+
+	std::cout << "TESTS FOR STACK" << std::endl << std::endl;
+
+	ft::stack<int> stack0;
+	ft::stack<int> stack2;
+ 	std::stack<int> stack1;
+	std::stack<int> stack3;
+
+	std::cout << "FT TEST EMPTY" << std::endl;
+	std::cout << stack0.empty() << std::endl;
+	std::cout << "STD TEST EMPTY" << std::endl;
+	std::cout << stack1.empty() << std::endl;
+
+	std::cout << "FT TEST PUSH" << std::endl;
+	stack0.push(5);
+	stack0.push(9);
+	std::cout << "STD TEST PUSH" << std::endl;
+	stack1.push(5);
+	stack1.push(9);
+	
+	std::cout << "FT TEST TOP" << std::endl;
+	std::cout << stack0.top() << std::endl << std::endl;
+	std::cout << "STD TEST TOP" << std::endl;
+	std::cout << stack1.top() << std::endl << std::endl;
+	
+	std::cout << "FT TEST SIZE" << std::endl;
+	std::cout << stack0.size() << std::endl << std::endl;
+	std::cout << "STD TEST SIZE" << std::endl;
+	std::cout << stack1.size() << std::endl << std::endl;
+
+	std::cout << "FT TEST POP" << std::endl;
+	stack0.pop();
+	std::cout << stack0.top() << std::endl << std::endl;
+	std::cout << "STD TEST POP" << std::endl;
+	stack1.pop();
+	std::cout << stack1.top() << std::endl << std::endl;
+
+	std::cout << "FT TEST RELATIONAL OPERATORS" << std::endl;
+	std::cout << (stack0 == stack2) << std::endl;
+	std::cout << (stack0 != stack2) << std::endl;
+	std::cout << (stack0 < stack2) << std::endl;
+	std::cout << (stack0 <= stack2) << std::endl;
+	std::cout << (stack0 > stack2) << std::endl;
+	std::cout << (stack0 >= stack2) << std::endl << std::endl;
+	std::cout << "STD TEST RELATIONAL OPERATORS" << std::endl;
+	std::cout << (stack1 == stack3) << std::endl;
+	std::cout << (stack1 != stack3) << std::endl;
+	std::cout << (stack1 < stack3) << std::endl;
+	std::cout << (stack1 <= stack3) << std::endl;
+	std::cout << (stack1 > stack3) << std::endl;
+	std::cout << (stack1 >= stack3) << std::endl << std::endl;
+
+	std::cout << "FT TEST ITERATOR TRAITS" << std::endl;
+	ft::iterator_traits<int *>::value_type i = 8; 
+	std::cout << i << std::endl << std::endl;
+	std::cout << "STD TEST ITERATOR TRAITS" << std::endl;
+	std::iterator_traits<int *>::value_type j = 8; 
+	std::cout << j << std::endl << std::endl;
+
+	std::cout << "FT TEST IS INTEGRAL" << std::endl;
+	std::cout << "char: " << ft::is_integral<char>::value << std::endl;
+	std::cout << "int: " << ft::is_integral<int>::value << std::endl;
+	std::cout << "float: " << ft::is_integral<float>::value << std::endl;
+	std::cout << "STD TEST IS INTEGRAL" << std::endl;
+	std::cout << "char: " << std::is_integral<char>::value << std::endl;
+  	std::cout << "int: " << std::is_integral<int>::value << std::endl;
+	std::cout << "float: " << std::is_integral<float>::value << std::endl;
+	
  }

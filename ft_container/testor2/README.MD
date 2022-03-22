@@ -1,58 +1,83 @@
-- `Run_test.sh` will look for all your containers and run every test it has for each
-- If one or more container name is specified, then only listed containers will be tested
-- tests are stored in each `Test/container_name/mains` folder
-- You can pass arguments to the tester :
-	- `clean` will clean your directory and exit
-	- [...]
-- You can see compile logs in `container_name/logs`
-- You can see valgrind output (not available on mac os) in `container_name/leaks`
-- You can see test outputs in `container_name/out`
-- You can see output diff in `container_name/diff`
-- You can see error outputs in `container_name/stderror`
+# containers_test
 
-- You can add your own tests as long as you respect these conditions:
-	- Tests must be named as : `name_main.cpp` and placed in `container_name/mains/`
-	- Tests must use
-		```#ifndef STD
-		# define NAMESPACE ft
-		#else
-		# define NAMESPACE std
-		#endif
-	
-		using namespace NAMESPACE;
+<p align="center">
+	<img src="./assets/demo.gif" >
+</p>
 
-- Test will be run once normally and once with `-D STD` option.
-- Test will be considered succesfull if outputs do not differ and if valgrind finds no leaks or errors.
-- There is a main template named `.empty_main.cpp` in `container_name/mains/`
-- Tests must use `#include "CONTAINER_UC.HPP"`. With no path prior to the file name. Include path will be set as a variable in the bash script
+## Warning
 
-## OUTPUTS :
+This tester was made with the first version of ft_containers' subject \
+Thus it does not test iterator traits (yet?)
 
-- `*some_main.cpp*` seems to be invalid : *some_main.cpp* does not compile, even with the std container
-- `*some test*` does not compile : *some_main.cpp* does not compile with YOUR container, it compiles normally with std containers
-- `*some test*` seems to leak : valgrind (if available) did not find "No leaks are possible" in the output :
-	- Either program did not exit normally
-	- Or it leaks
-- `*some test*` : valgrind detected some errors : did not find "ERROR SUMMARY: 0 errors from 0 contexts" in valgrind output
+Also, passing this tester does not mean the project was done correctly, please go further
 
-If you have any question or suggestion, please feel free to PM me on slack @hbaudet ;)
+## Usage
 
-##  Notes :
+Go in your ft_containers' directory:
 
-- Some tests come from cplusplus.com
-- Some were written by myself (hbaudet)
-- Some were submitted by other users
+```bash
+git clone https://github.com/mli42/containers_test.git && cd ./containers_test/
+```
 
-## Thanks :
+Expected tree:
 
-- Oroberts
-- [Rofernan](http://github.com/rofernan42)
-- Lmartin
-- Thgermai
-- Bbrunet
-- [...]
+```
+. [ft_container]
+├── <container>.hpp
+├── [...]
+└── containers_test
+    └── [...]
+```
 
-// THIS IS WIP, CHECK REGULARLY FOR UPDATES
+If your project does not fit the expected tree (e.g. has sub-directories and/or file names are capitalized or what) \
+Please edit the first line of `./<container>/common.hpp` (for filenames) \
+Or the variable `tested_path` in `fct.sh` (for special path)
 
-## Incomimg :
-- Detection (and kill) of infinite loops during tests
+Then what? \
+There are a three executables! How do we use them?
+
+```bash
+./do.sh [container_to_test] [...]
+./cmp_one <path/to/test_file>
+./one <path/to/test_file> [namespace=ft]
+```
+
+Examples:
+```bash
+./do.sh # tests every containers
+./do.sh vector list # tests only vector && list
+
+./cmp_one srcs/list/size.cpp # prints the result comparison (ft/std) on this test file only
+
+./one srcs/list/rite.cpp # prints the output of this test file using ft namespace
+./one srcs/list/rite.cpp std # prints the output of this test file using the std
+```
+
+How to read the output ?
+```
+The [ ✅ / ❌ ] emojis shows if they behave the same, i.e if the STL and your implementation:
+- compile the same way,
+- return the same number,
+- print the same output.
+
+If a diff occurs, a deepthought is created and logs are kept.
+
+The [Y/N] shows if the STL compile (Y) or not (N), there are some test where you should not compile.
+(If every test gives `N`, there is probably a problem with your hpp headers. Use ./one to debug)
+```
+
+## Tested features
+- [x] vector
+- [x] list
+- [x] map
+- [x] stack
+- [x] queue
+- [x] deque
+- [x] multimap
+- [x] set
+- [x] multiset
+
+## Contributors
+
+PRs are welcomed! \
+Thank you!
