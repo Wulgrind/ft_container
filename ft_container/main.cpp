@@ -6,7 +6,7 @@
 /*   By: qbrillai <qbrillai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 10:29:25 by qbrillai          #+#    #+#             */
-/*   Updated: 2022/03/23 17:48:49 by qbrillai         ###   ########.fr       */
+/*   Updated: 2022/03/23 21:53:21 by qbrillai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "iterator.hpp"
 #include "redblacktree.hpp"
 #include "set.hpp"
+#include <set>
 
 template <class T>
 void ft_test(typename ft::vector<T> ft_c0)
@@ -76,9 +77,36 @@ void std_map(typename std::map<T1, T2> map_c1)
 	std::cout << std::endl;
 }
 
+template <class T1>
+void ft_set(typename ft::set<T1> set_c0)
+{
+	typename ft::set<T1>::iterator ft_ret = set_c0.begin();
+	std::cout << "size = " << set_c0.size() << std::endl;
+	std::cout << "max size = " << set_c0.max_size() << std::endl;
+	while (ft_ret != set_c0.end())
+	{
+		std::cout << "key type value is " << *ft_ret << std::endl;
+		ft_ret++;
+	}
+	std::cout << std::endl;
+}
+
+template <class T1>
+void std_set(typename std::set<T1> set_c1)
+{
+	typename std::set<T1>::iterator std_ret = set_c1.begin();
+	std::cout << "size = " << set_c1.size() << std::endl;
+	std::cout << "max size = " << set_c1.max_size() << std::endl;
+	while (std_ret != set_c1.end())
+	{
+		std::cout << "key type value is " << *std_ret << std::endl;
+		std_ret++;
+	}
+	std::cout << std::endl;
+}
+
 int	main()
 {
-	
 	ft::vector<int>		ft_c0;
 	std::vector<int>	std_c0;
 	ft::vector<int>		ft_c1;
@@ -555,5 +583,4 @@ int	main()
 	std::cout << "char: " << std::is_integral<char>::value << std::endl;
   	std::cout << "int: " << std::is_integral<int>::value << std::endl;
 	std::cout << "float: " << std::is_integral<float>::value << std::endl;
-	
  }

@@ -4,6 +4,7 @@
 # include "iterator.hpp"
 # include "redblacktree.hpp"
 # include <cstddef>
+# include "map.hpp"
 
 # define NOIR 0
 # define ROUGE 1
@@ -466,16 +467,16 @@ namespace ft
 
 	};
 
-	template <class Arg1, class Arg2, class Result> // Permet à une structure d'être call comme une fonction avec l'operator() et deux valeurs.
-  	struct binary_function {
+	/*template <class Arg1, class Arg2, class Result> // Permet à une structure d'être call comme une fonction avec l'operator() et deux valeurs.
+    struct binary_function {
    		typedef Arg1 first_argument_type;
     	typedef Arg2 second_argument_type;
     	typedef Result result_type;
-  	};
+  	};*/
 
-	template <class T> struct less : ft::binary_function <T,T,bool> {
+	/*template <class T> struct less : ft::binary_function <T,T,bool> {
 		bool operator() (const T& x, const T& y) const {return x < y;}
-	};
+	};*/
 
 	template < class Key,                                         
            class Compare = std::less<Key>,
@@ -547,7 +548,7 @@ namespace ft
 				insert(first, last);
 			}
 
-			~set ( void ){};
+			~set ( void ){}
 
 			iterator begin(void){
 				if (sizenode == 0){ // pour les comparaisons != avec end quand startnode est NULL.
@@ -587,38 +588,6 @@ namespace ft
 			size_type max_size(void) const {
 				std::allocator<ft::noeud<value_type> > test;
 				return (test.max_size());}
-
-			key_type& operator[] (const key_type& k){
-			//	size_t length = 0;
-				if (endnode)
-					endnode->droit = NULL;
-				if (sizenode == 0)
-					this->insert(k);
-				noeud<value_type> *temp = this->racine;
-				while (temp->clé != k){
-					if (temp->gauche != NULL && (cmp(temp->clé , k) == 0)){
-						temp = temp->gauche;
-					}
-					else if (temp->droit != NULL && (cmp(temp->clé , k) == 1)){
-						temp = temp->droit;
-					}
-					else if (temp->clé.first == k){
-						endnode->droit = pend;
-						return (temp->clé);
-					}
-					else if (temp->clé.first != k){
-						this->insert(k);
-						temp = nodes.findreturn(racine, k);
-						endnode->droit = pend;
-						return (temp->clé);
-					}
-					/*else if(temp->clé.first != k){
-						
-					}*/
-				}
-				endnode->droit = pend;
-				return (temp->clé);
-			}
 
 			pair<iterator,bool> insert (const value_type& val){
 				if (endnode)
