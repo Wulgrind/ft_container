@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   relationalOperators_main.cpp                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hbaudet <hbaudet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: qbrillai <qbrillai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/02 13:07:06 by hbaudet           #+#    #+#             */
-/*   Updated: 2021/01/20 10:27:19 by hbaudet          ###   ########.fr       */
+/*   Updated: 2022/03/23 20:34:10 by qbrillai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

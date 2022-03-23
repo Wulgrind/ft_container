@@ -6,7 +6,7 @@
 /*   By: qbrillai <qbrillai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 10:29:25 by qbrillai          #+#    #+#             */
-/*   Updated: 2022/03/22 18:01:11 by qbrillai         ###   ########.fr       */
+/*   Updated: 2022/03/23 17:48:49 by qbrillai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "map.hpp"
 #include "iterator.hpp"
 #include "redblacktree.hpp"
+#include "set.hpp"
 
 template <class T>
 void ft_test(typename ft::vector<T> ft_c0)

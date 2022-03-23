@@ -6,7 +6,7 @@
 /*   By: qbrillai <qbrillai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 10:29:36 by qbrillai          #+#    #+#             */
-/*   Updated: 2022/03/23 16:43:28 by qbrillai         ###   ########.fr       */
+/*   Updated: 2022/03/23 16:54:51 by qbrillai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,6 @@ namespace ft
 			return (noeud<const T>(this->clé));}
 
 	};
-	
-
 
 	template <class T, class Compare> class redblacktree
 	{
