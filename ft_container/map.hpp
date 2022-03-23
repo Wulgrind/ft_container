@@ -99,6 +99,7 @@ namespace ft
 				}
 				return (iterator(startnode));
 			}
+
 			const_iterator begin(void) const {
 				if (sizenode == 0){
 					modifypend();
@@ -106,6 +107,7 @@ namespace ft
 				}
 				return (const_iterator(startnode));
 			}
+			
 			iterator end(void){
 				/*if (this->sizenode == 0){
 					iterator temp(NULL);
@@ -116,6 +118,7 @@ namespace ft
 				iterator temp(pend);
 				return (temp);
 			}
+
 			const_iterator end(void ) const {
 				//iterator ending = end();
 				/*if (this->sizenode == 0){
@@ -127,6 +130,7 @@ namespace ft
 				const_iterator temp(pend);
 				return (temp);
 			}
+
 			reverse_iterator rbegin(void){return(reverse_iterator(this->end()));}
 			const_reverse_iterator rbegin(void) const {return(const_reverse_iterator (this->end()));}
 			reverse_iterator rend(void){return(reverse_iterator(begin()));}
@@ -295,26 +299,18 @@ namespace ft
 				noeud<value_type> *temp = position.p;
 				noeud<value_type> *temp2 = temp;
 				if (temp == endnode && endnode->parent == NULL)
-					endnode = NULL;
+					endnode = NULL; // plus de endnode car pas de parent et donc pas de remplacant
 				else if (temp == endnode)
-					endnode = endnode->parent;
+					endnode = endnode->parent; // la valeur -1 devient parent.
 				if (endnode != NULL)
-					endnode->droit = NULL;
+					endnode->droit = NULL; // enlever le pend qui peut etre problematique.
 				if (temp->gauche != NULL && temp->droit != NULL) 
 				{
-				//	std::cout << "test2" << std::endl;
-				/*	std::cout << temp->clé.first << std::endl;
-					std::cout << temp->droit->clé.first << std::endl;
-					std::cout << temp->gauche->clé.first << std::endl;
-					std::cout << temp->gauche->gauche->clé.first << std::endl;
-					std::cout << temp->gauche->gauche->gauche->clé.first << std::endl;*/
 					temp = temp->gauche;
 					if (temp->droit != NULL){
 						while (temp->droit != NULL){
-						//	std::cout << "TEEEEST" << std::endl; 
 							temp = temp->droit;
 						}
-					//	std::cout << temp->clé.first << std::endl;
 						if (temp->parent != NULL){
 							if (temp->parent->droit == temp){
 								temp->parent->droit = temp->gauche;
@@ -361,37 +357,7 @@ namespace ft
 					if (temp2->droit)
 						temp2->droit->parent = temp;
 				}
-				/*else if (temp->droit != NULL){ // Même chose mais à l'inverse.
-					temp = temp->droit;
-					if (temp->gauche){
-						while (temp->gauche != NULL)
-							temp = temp->gauche;
-						if (temp->parent->gauche == temp)
-							temp->parent->gauche = temp->droit;
-						else
-							temp->parent->droit = temp->droit;
-						if (temp->droit)
-							temp->droit->parent = temp->parent;
-						if (temp2->clé.first < temp2->parent->clé.first)
-							temp2->parent->gauche = temp;
-						else
-							temp2->parent->droit = temp;
-					}
-					else{
-						if (temp2->parent){
-							temp2->parent->droit = temp;
-							temp->parent = temp2->parent;
-						}
-						else {
-							temp->parent = NULL;
-						}
-					}
-					temp->parent = temp2->parent;
-					temp->gauche = temp2->gauche;
-					temp->couleur = temp2->couleur;
-				}*/
 				else if (temp->gauche == NULL && temp->droit == NULL) {
-				//	std::cout << "test3" << std::endl;
 					if (temp->parent && temp->parent->clé.first < temp->clé.first)
 						temp->parent->droit = NULL;
 					else if (temp->parent)
@@ -402,7 +368,6 @@ namespace ft
 						temp = NULL;
 				}
 				else {
-					//std::cout << "test4" << std::endl;
 					if (temp->droit != NULL)
 						temp = temp->droit;
 					else
@@ -425,15 +390,11 @@ namespace ft
 					this->endnode = temp;
 				if (temp2 == this->racine)
 					this->racine = temp;
-		//		std::cout << "Test5" << std::endl;
 				nodes.remove(&this->racine, temp, temp2);
-			//	std::cout << "test6" << std::endl;
 				if (endnode != NULL)
 					endnode->droit = this->pend;
 				this->sizenode--;
-		//		std::cout << "test7" << std::endl;
 				delete (temp2);
-			//	std::cout << "test8" << std::endl;
 			}
 
 			size_type erase (const key_type& k)

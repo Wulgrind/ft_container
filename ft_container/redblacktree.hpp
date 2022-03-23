@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redblacktree.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: qbrillai <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: qbrillai <qbrillai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 10:29:36 by qbrillai          #+#    #+#             */
-/*   Updated: 2022/03/21 10:29:37 by qbrillai         ###   ########.fr       */
+/*   Updated: 2022/03/23 16:43:28 by qbrillai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,25 +153,25 @@ namespace ft
 		}
 
 		void insertion_repare_arbre(noeud<T> *n) {
-	   		if (parent(n) == NULL)
+	   		if (parent(n) == NULL) // La racine doit toujours etre noire.
 				n->couleur = NOIR;
-			else if (parent(n)->couleur == NOIR)
+			else if (parent(n)->couleur == NOIR) // Rien a faire.
     			return ;
-   			else if (oncle(n) && oncle(n)->couleur == ROUGE){
+   			else if (oncle(n) && oncle(n)->couleur == ROUGE){ // Si l oncle est rouge , parent et oncle sont colories en noir. Le grand parent devient rouge.
 				parent(n)->couleur = NOIR;
    				oncle(n)->couleur = NOIR;
    				noeud<T> *g = grandparent(n);
    				g->couleur = ROUGE;
    				insertion_repare_arbre(g);
  			}
-   			else{
+   			else{ // Si l oncle est noir on effectue des rotations en fonction des positions du parent et du grand parent pour equilibrer.
 	    		noeud<T> *p = parent(n);
    				noeud<T> *g = grandparent(n);
   				if (g->gauche && g->gauche->droit && n == g->gauche->droit) {
       				rotation_gauche(p);
      				n = n->gauche;
 				} 
-				else if (g->droit && g->droit->gauche && n == g->droit->gauche) {
+				else if (g->droit && g->droit->gauche && n == g->droit->gauche) { // parent devient grand parent qui devient oncle. Le parent est noir et le grand parent rouge.
     				rotation_droite(p);
     				n = n->droit;
 					p = parent(n);
@@ -277,9 +277,7 @@ namespace ft
 		}
 
 		noeud<T> **remove (noeud<T> **racine, noeud <T> *temp, noeud <T> *temp2){
-		//	std::cout << "test1" << std::endl;
-			if ((temp2 && temp2->couleur == 1) || (temp && temp->couleur == 1)){ // si la valeur supprimée ou son enfant sont rouges, on passe noir pour garder l'équilibre mais pas si doublement rouge (dans le cas où l'enfant immédiat avait deux branches).
-		//		std::cout << "test2" << std::endl;
+			if ((temp2 && temp2->couleur == 1) || (temp && temp->couleur == 1)){ // si la valeur supprimée ou son enfant sont rouges, on passe noir pour garder l'équilibre sauf si double rouge.
 				if (temp2 && temp2->couleur == 1 && temp && temp->couleur == 1)
 					temp->couleur = 1;
 				else
@@ -287,27 +285,22 @@ namespace ft
 			}
 			if (temp == *racine)
 				temp->couleur = 0;
-			else if (temp != *racine){ // Si les deux sont noirs et temp n'est pas la racine
-			//	std::cout << "test3" << std::endl;
+			else if (temp != *racine){ // Dans le cas ou temp n est pas la racine.
 				noeud<T> * s = this->frere(temp);
 				noeud<T> * p = this->parent(temp);
-				noeud<T> * r; 
+				noeud<T> * r; // fils rouge
 				// https://www.geeksforgeeks.org/red-black-tree-set-3-delete-2/
-				if (s && s == s->parent->droit && s->couleur == 0 && ((s->droit && s->droit->couleur == 1) || (s->gauche && s->gauche->couleur == 1))){
-				//	std::cout << "test1a" << std::endl;
-					if (s->droit && s->droit->couleur == 1){
-				//		std::cout << "test2a" << std::endl;
+				if (s && s == s->parent->droit && s->couleur == 0 && ((s->droit && s->droit->couleur == 1) || (s->gauche && s->gauche->couleur == 1))){ // Si le frere est noir et un de ses enfants est rouge.
+					if (s->droit && s->droit->couleur == 1){ // Si enfant droit est rouge decallage a gauche et l enfant gauche de sibling devient l enfant droit de l ancien parent.
 						s->droit->couleur = 0;
 						r = s->gauche;
 						if (p == *racine)
 							*racine = s;
-				//		std::cout << "test3a" << std::endl;
 						s->parent = p->parent;
 						if (p->parent && p == p->parent->droit)
 							p->parent->droit = s;
 						else if (p->parent)
 							p->parent->gauche = s;
-				//		std::cout << "test4a" << std::endl;
 						p->parent = s;
 						p->droit = s->gauche;
 						if (s->gauche)
@@ -317,8 +310,7 @@ namespace ft
 							r->parent = p;
 						p->droit = r;
 					}
-					else{
-					//	std::cout << "test1b" << std::endl;
+					else{ // Le fils gauche de s prend sa place et s devient son fils droit s en suit un decallage vers la gauche.
 						r = s->gauche;
 						p->droit = r;
 						r->parent = p;
@@ -327,7 +319,6 @@ namespace ft
 							r->droit->parent = s;
 						r->droit = s;
 						s->parent = r;
-					//	std::cout << "test1b1" << std::endl;
 						r->parent = p->parent;
 						if (*racine == p)
 							*racine = r;
@@ -335,7 +326,6 @@ namespace ft
 							p->parent->droit = r;
 						else if (p->parent)
 							p->parent->gauche = r;
-					//	std::cout << "test1b2" << std::endl;
 						p->parent = r;
 						p->droit = r->gauche;
 						if (r->gauche)
@@ -344,34 +334,27 @@ namespace ft
 						r->couleur = 0;
 					}
 				}
-				else if (s && s == s->parent->gauche && s->couleur == 0 && ((s->droit && s->droit->couleur == 1) || (s->gauche && s->gauche->couleur == 1))){
-				//	std::cout << "test1c" << std::endl;
+				else if (s && s == s->parent->gauche && s->couleur == 0 && ((s->droit && s->droit->couleur == 1) || (s->gauche && s->gauche->couleur == 1))){ // Miroir de la situation au dessus.
 					if (s->gauche->couleur == 1){
-					//	std::cout << "test2c" << std::endl;
 						s->gauche->couleur = 0;
 						r = s->droit;
 						if (p == *racine)
 							*racine = s;
 						s->parent = p->parent;
-				//			std::cout << "test3c" << std::endl;
 						if (p->parent && p == p->parent->droit)
 							p->parent->droit = s;
 						else if (p->parent)
 							p->parent->gauche = s;
-					//		std::cout << "test4c" << std::endl;
 						p->parent = s;
 						p->gauche = s->droit;
 						if (s->droit)
 							s->droit->parent = p;
-				//		std::cout << "test5c" << std::endl;
 						s->droit = p;
 						if (r)
 							r->parent = p;
 						p->gauche = r;
-				//		std::cout << "test6c" << std::endl;
 					}
 					else{
-				//		std::cout << "test7c" << std::endl;
 						r = s->droit;
 						p->gauche = r;
 						r->parent = p;
@@ -395,38 +378,31 @@ namespace ft
 						r->couleur = 0;
 					}
 				}
-				else if (s && s->couleur == 0 && (s->droit == NULL || s->droit->couleur == 0) && (s->gauche == NULL || s->gauche->couleur == 0)){
-			//		std::cout << "test1d" << std::endl;
+				else if (s && s->couleur == 0 && (s->droit == NULL || s->droit->couleur == 0) && (s->gauche == NULL || s->gauche->couleur == 0)){ // Si le sibling est noir et ses enfants soit noirs (une feuille est consideree comme noire) on colorie le sibling en rouge et on rappelle la fonction si le parent est noir. Pour verifier de ne pas avoir desiquilibre l arbre au niveau du parent
 					s->couleur = 1;
 					if (p->couleur == 1)
 						p->couleur = 0;
 					else
 						this->remove(racine, p, temp);
 				}
-				else if (s && s->couleur == 1){
-				//	std::cout << "test1e" << std::endl;
+				else if (s && s->couleur == 1){ // Sibling est rouge. Rotation a gauche, l enfant du sibling droit prend la place du sibling et l enfant gauche de sibling devient l enfant droit de l ancien parent.
 					p->couleur = 1;
 					if (s == p->droit){
-			//			std::cout << "test1e1" << std::endl;
 						s->couleur = 0;
 						s->parent = p->parent;
-				//		std::cout << "test1e1a" << std::endl;
 						if (*racine == p)
 							*racine = s;
-			//			std::cout << "test1e2" << std::endl;
 						if (p->parent && p->parent->gauche == p)
 							p->parent->gauche = s;
 						else if (p->parent)
 							p->parent->droit = s;
-				//		std::cout << "test1e3" << std::endl;
 						p->parent = s;
 						p->droit = s->gauche;
 						if (s->gauche)
 							s->gauche->parent = p;
 						s->gauche = p;
 					}
-					else if (s == p->gauche){
-				//		std::cout << "test2e" << std::endl;
+					else if (s == p->gauche){ // miroir du dessus.
 						s->couleur = 0;
 						s->parent = p->parent;
 						if (*racine == p)
